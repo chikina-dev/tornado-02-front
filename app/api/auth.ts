@@ -7,7 +7,7 @@ export async function apiGet(path: string) {
   });
 }
 
-export async function apiPost(path: string, body: any) {
+export async function apiPost(path: string, body: Record<string, unknown>) {
   return fetch(`${BASE_URL}${path}`, {
     method: "POST",
     credentials: "include",
