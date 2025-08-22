@@ -14,8 +14,9 @@ export default function Login() {
     const password = formData.get("password") as string;
 
     try {
-      const res = await apiPost("/login", { email, password });
-      if (!res.ok) throw new Error("ログイン失敗");
+      const data = await apiPost("/login", { email, password });
+      console.log(data);
+      if (data.message !== 'Login successful') throw new Error("ログイン失敗");
       navigate("/dashboard");
     } catch (err) {
       setError((err as Error).message);

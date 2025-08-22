@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+  --color-custom-purple: #DAA4FE;
+  --font-shippori: "Shippori Mincho B1", serif;
+}

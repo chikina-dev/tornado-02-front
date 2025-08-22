@@ -8,5 +8,15 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   build: {
     outDir: "build",
-  }
+  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "https://tornado2025.chigayuki.com",
+  //       changeOrigin: true,
+  //       secure: false,
+  //     },
+  //   },
+  // },
 });
+
