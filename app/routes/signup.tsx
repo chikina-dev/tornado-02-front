@@ -14,7 +14,7 @@ export default function Signup() {
     const password = formData.get("password") as string;
 
     try {
-      const data = await apiPost("/create", { email, password });
+      const data = await apiPost("/create", { email, password }, undefined, false);
       console.log(data);
       if (data.message !== "Account created successfully") throw new Error("サインアップ失敗");
       navigate("/dashboard");

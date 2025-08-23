@@ -12,12 +12,13 @@ export async function apiGet<T>(path: string): Promise<T> {
 export async function apiPost<T>(
   path: string,
   body: Record<string, unknown>,
-  options?: RequestInit
+  options?: RequestInit,
+  includeCredentials: boolean = true
 ): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
     method: "POST",
-    credentials: "include",
+    credentials: includeCredentials ? "include" : "omit",
     headers: {
       "Content-Type": "application/json",
       ...(options?.headers || {}),
