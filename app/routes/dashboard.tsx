@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { apiGet } from "../api/auth";
 import Header from "~/components/Header";
+import { GoogleSearch } from "~/components/GoogleSearch";
+import { ScanData } from "~/components/ScanData";
 
 interface UploadedFile {
   url: string;
@@ -20,21 +22,18 @@ export default function Dashboard() {
   //     try{
   //       const data = await apiGet<{ email: string}>("/profile");
   //       setUserEmail(data.email);
-  //       await fetchUploadedFiles();
+       
+  //       const files = await apiGet<UploadedFile[]>("/uploaded/files");
+  //       setUploadedFiles(files);
+
   //       setLoading(false);
-  //     }catch{
+  //     }catch (err){
+  //       // 401 など認証エラーならログインページへ
+  //       console.error("Dashboard初期化に失敗:", err);
   //       navigate("/login");
   //     }
   //   }
 
-  //   async function fetchUploadedFiles() {
-  //     try{
-  //         const data = await apiGet<UploadedFile[]>("/uploaded/files");
-  //         setUploadedFiles(data);
-  //     }catch {
-  //       console.error("ファイル一覧取得に失敗しました");
-  //     }
-  //   }
   //   fetchUser();
   // }, [navigate]);
 
@@ -43,17 +42,13 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-custom-purple">
       <Header />
-      <div className="px-4">
-        <h1 className="font-[var(--font-shippori)] text-white text-4xl mt-10 text-center tracking-[0.4em]">
-          本日の要約
-        </h1>
-        <div className="max-w-4xl mx-auto">
-          {/* 白いカード */}
-          <div className="p-6 bg-white shadow-md mt-3">
-            <p className="text-gray-800 whitespace-pre-line break-words">
-              summary
-            </p>
-          </div>
+      <div>
+        <div className="text-center">
+          <h1 className="font-[var(--font-shippori)] bg-white inline-block text-custom-purple text-3xl my-20 px-6 py-2 tracking-[0.6em] rounded-lg">
+            本日の要約を見る
+          </h1>
+        </div>
+        <div className="max-w-4xl mx-auto px-4">
 
           {/* カードの外で右端に配置 */}
           <div className="flex justify-end mt-3">
@@ -65,52 +60,9 @@ export default function Dashboard() {
           </div>
         </div>
         <hr className="border-t-2 border-white my-4" />
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block">
-            Google検索
-          </h2>
-          <ul className="text-white my-3">
-            <li>8/5 ウサギについて</li>
-            <li>8/5 モモンガについてについて</li>
-          </ul>
-          {/* <ur>
-          {logs?.map((log) => {
-            return (
-                <li key={log.id}>
-                  {log.content}
-                </li>
-            );
-          })}
-          </ur> */}
-
-        </div>
+        <GoogleSearch />
         <hr className="border-t-2 border-white my-4" />
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block">
-            スキャンデータ
-          </h2>
-          <div>
-            <h1 className="bg-black p-20 inline-block mt-5 mr-2">
-
-            </h1>
-            <h1 className="bg-black p-20 inline-block mt-5 mr-2">
-
-            </h1>
-            <h1 className="bg-black p-20 inline-block mt-5 mr-2">
-
-            </h1>
-
-          </div>
-          {/* <ur>
-          {images?.map((image) => {5
-            return (
-                <li key={image.id}>
-                  {image.url}
-                </li>
-            );
-          })}
-          </ur> */}
-        </div>
+        <ScanData />
       </div>
     </div>
   );
