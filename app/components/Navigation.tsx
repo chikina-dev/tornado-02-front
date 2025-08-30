@@ -23,8 +23,16 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 
 	// ログアウト
 	async function handleLogout() {
-		await apiPost("/logout", {});
-		navigate("/login");
+		try {
+			await apiPost("/logout", {}, undefined, true);
+		} catch(err) {
+			console.log("ログアウトAPI失敗", err);
+		} finally {
+			localStorage.removeItem("access_token");
+			localStorage.removeItem("refresh_token");
+
+			navigate("/login");
+		}
 	}
 
 	return(
