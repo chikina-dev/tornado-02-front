@@ -12,7 +12,7 @@ const Header = (): JSX.Element => {
 	};
   return (
     <header className="relative bg-custom-purple text-white p-4 flex justify-between items-center border-b-2 border-white">
-      <h1 className="text-2xl font-bold"><Link to="/dashboard">momonga</Link></h1>
+      <h1 className="text-2xl font-bold"><Link to="/dashboard">Viofolio</Link></h1>
       <ScanButton />
 			<ToggleButton
         open={open}

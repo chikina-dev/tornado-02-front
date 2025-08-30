@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { apiGet } from "../api/auth";
 import Header from "~/components/Header";
 import { GoogleSearch } from "~/components/GoogleSearch";
@@ -44,9 +44,11 @@ export default function Dashboard() {
       <Header />
       <div>
         <div className="text-center">
-          <h1 className="font-[var(--font-shippori)] bg-white inline-block text-custom-purple text-3xl my-20 px-6 py-2 tracking-[0.6em] rounded-lg">
-            本日の要約を見る
-          </h1>
+          <Link to="/summary">
+            <h1 className="font-[var(--font-shippori)] bg-white inline-block text-custom-purple text-3xl my-20 px-6 py-2 tracking-[0.6em] rounded-lg">
+              本日の要約を見る
+            </h1>
+          </Link>
         </div>
         <div className="max-w-4xl mx-auto px-4">
 
