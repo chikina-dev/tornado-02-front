@@ -1,42 +1,116 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { apiUpload } from "~/api/auth";
 
 interface UploadedFile {
   url: string;
   filename: string;
 }
 
-export const ScanButton: FC = () => {
-	const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // アップロードボタン
-  async function handleUpload() {
-    if (!selectedFile) {
-      alert("ファイルを選択してください");
-      return;
-    }
+type ScanButtonProps = {
+  onUploadSuccess?: () => void;
+}
 
+export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
+  const [open, setOpen] = useState(false);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  async function uploadFile(file: File) {
     const formData = new FormData();
-    formData.append("avatar", selectedFile);
+    formData.append("file", file);
 
-    const res = await fetch("http://localhost:8000/upload-avatar", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    });
-
-    if (res.ok) {
-      const data: UploadedFile = await res.json();
-      setUploadedFiles(prev => [...prev, data]);
-      setSelectedFile(null);
-      alert("アップロード成功！");
-    } else {
-      alert("アップロード失敗");
+    try {
+      const result = await apiUpload<UploadedFile>("/upload/file", formData);
+      console.log("アップロード成功:", result);
+      if (onUploadSuccess) onUploadSuccess();
+      return result;
+    }catch (error) {
+      console.error("アップロード失敗", error);
+      throw error;
     }
   }
+
+  function handleSelect(action: string) {
+    setOpen(false);
+    
+    switch(action) {
+      case "camera":
+        cameraInputRef.current?.click();
+        break;
+      case "file":
+        fileInputRef.current?.click();
+        break;
+      case "scan":
+        break;
+    }
+  }
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    console.log(event);
+    const file = event.target.files?.[0];
+    if (!file) return;
+    uploadFile(file);
+  }
+
 	return (
-		<button className="font-[var(--font-shippori)] px-8 py-1 text-custom-purple ml-auto bg-white inline-block">
-			アップロード
-		</button>
-	)
+    <div className="relative inline-block ml-auto">
+      <button
+        onClick={() => setOpen(!open)}
+        className="font-[var(--font-shippori)] px-8 py-1 text-custom-purple bg-white">
+        アップロード
+      </button>
+      {/* メニュー */}
+        <div
+          className={`absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10
+            transition-all duration-300 ease-out
+            transform
+            ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
+          `}
+        >
+          <ul className="text-gray-700">
+            <li className="border-b border-b-gray-300">
+              <button
+                onClick={() => handleSelect("camera")}
+                className="w-full text-left px-4 py-1.5 hover:bg-gray-100 border-b-gray rounded-md"
+              >
+                写真を撮る
+              </button>
+            </li>
+            <li className="border-b border-b-gray-300">
+              <button
+                onClick={() => handleSelect("file")}
+                className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
+              >
+                写真を選択する
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleSelect("scan")}
+                className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
+              >
+                スキャンする
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          ref={cameraInputRef}
+          onChange={handleFileChange}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+        />
+    </div>
+	);
 }

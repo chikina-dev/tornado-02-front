@@ -17,28 +17,28 @@ export default function Dashboard() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
   // 初期ロード：ユーザー情報取得＋アップロード済み画像取得
-  // useEffect(() => {
-  //   async function fetchUser() {
-  //     try{
-  //       const data = await apiGet<{ email: string}>("/profile");
-  //       setUserEmail(data.email);
+  useEffect(() => {
+    async function fetchUser() {
+      try{
+        const data = await apiGet<{ email: string}>("/profile");
+        setUserEmail(data.email);
        
-  //       const files = await apiGet<UploadedFile[]>("/uploaded/files");
-  //       setUploadedFiles(files);
+        const files = await apiGet<UploadedFile[]>("/files");
+        setUploadedFiles(files);
 
-  //       setLoading(false);
-  //     }catch (err){
-  //       // 401 など認証エラーならログインページへ
-  //       console.error("Dashboard初期化に失敗:", err);
-  //       navigate("/login");
-  //     }
-  //   }
+        setLoading(false);
+      }catch (err){
+        // 401 など認証エラーならログインページへ
+        console.error("Dashboard初期化に失敗:", err);
+        navigate("/login");
+      }
+    }
 
-  //   fetchUser();
-  // }, [navigate]);
+    fetchUser();
+  }, [navigate]);
 
-  // if (loading) return <p className="text-center mt-10">読み込み中...</p>;
-
+  if (loading) return <p className="text-center mt-10">読み込み中...</p>;
+  console.log(uploadedFiles);
   return (
     <div className="min-h-screen bg-custom-purple">
       <Header />
