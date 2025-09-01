@@ -9,6 +9,8 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import GithubSlugger from "github-slugger";
+import { useSearchParams } from "react-router";
+
 
 interface SummaryResponse {
   date: string;
@@ -17,7 +19,8 @@ interface SummaryResponse {
   tags: string[];
 }
 
-function formatDate(date: Date): string {
+function formatDate(date?: Date): string {
+  if (!date) return "";
   const y = date.getFullYear();
   const m = (date.getMonth() + 1).toString().padStart(2, "0");
   const d = date.getDate().toString().padStart(2, "0");
@@ -161,12 +164,23 @@ const TableOfContents: React.FC<TocProps> = ({ markdown, activeId }) => {
   );
 };
 
+interface SummaryProps {
+  date: Date; // 親コンポーネントから渡す日付
+}
+
 export default function Summary() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [date, setDate] = useState(() => {
+  const dateParam = new URLSearchParams(window.location.search).get("date");
+  return dateParam ? new Date(dateParam) : new Date();
+});
+  
+
+  // ここからは date を useState で管理して fetch に渡す
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [date, setDate] = useState(new Date());
 
   // 現在セクションハイライト用
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -229,6 +243,7 @@ export default function Summary() {
         const d = date.getDate();
         const requestPath = `/summaries/${y}/${m}/${d}`;
         const data = await apiGet<SummaryResponse>(requestPath);
+        
 
         // 可読性のため：見出し重複の多い原文を前処理
         const cleaned = preprocessMarkdown(data.markdown);
@@ -253,7 +268,7 @@ export default function Summary() {
       }
     }
     fetchSummary();
-  }, [navigate, date]);
+  }, [date]);
 
   function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newDate = new Date(e.target.value);

@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiUpload } from "~/api/auth";
 
 interface UploadedFile {
@@ -15,6 +15,8 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   const [open, setOpen] = useState(false);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   async function uploadFile(file: File) {
     const formData = new FormData();
@@ -53,15 +55,31 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
     uploadFile(file);
   }
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current && !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current && !buttonRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+
+  }, []);
+
 	return (
     <div className="relative inline-block ml-auto">
       <button
+        ref={buttonRef}
         onClick={() => setOpen(!open)}
         className="font-[var(--font-shippori)] px-8 py-1 text-custom-purple bg-white">
         アップロード
       </button>
       {/* メニュー */}
         <div
+          ref={menuRef}
           className={`absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10
             transition-all duration-300 ease-out
             transform

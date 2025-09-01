@@ -39,17 +39,17 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 		<nav
 			id={id}
 			aria-hidden={!open}
-			className={`z-50 fixed top-17 left-0 w-full h-full bg-custom-purple shadow-md flex flex-col items-center justify-center transition-all duration-300 ${
+			className={`z-50 fixed top-17 left-0 w-full h-full bg-custom-purple shadow-md flex flex-col items-center transition-all duration-300 ${
 				open ? "opacity-100" : "opacity-0 pointer-events-none"
 			}`}
 		>
-			<ul className="w-full text-center text-2xl tracking-[0.6em]">
-				<li className="py-5 text-white"><Link to="/dashboard">ホーム</Link></li>
-				<li className="py-5 text-white"><Link to="/calendar">履歴</Link></li>
-				<li className="py-5 text-white"><Link to="/login">ログイン</Link></li>
-				<li className="py-5 text-white"><Link to="/inquiry">お問い合わせ</Link></li>
-				<li className="py-5 text-white">使い方</li>
-				<li className="py-5 text-white" ><button onClick={handleLogout}>ログアウト</button></li>
+			<ul className="w-full text-center text-3xl tracking-[0.6em] mt-20">
+				<li className="py-7 text-white"><Link to="/dashboard">ホーム</Link></li>
+				<li className="py-7 text-white"><Link to="/analyze">分析結果</Link></li>
+				<li className="py-7 text-white"><Link to="/calendar">履歴</Link></li>
+				<li className="py-7 text-white"><Link to="/inquiry">お問い合わせ</Link></li>
+				<li className="py-7 text-white">使い方</li>
+				<li className="py-7 text-white"><button onClick={handleLogout}>ログアウト</button></li>
 			</ul>
 		</nav>	
 	);
