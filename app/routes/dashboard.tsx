@@ -18,11 +18,30 @@ interface FileResponse {
   created_at: string;
 }
 
+interface HistoryItem {
+  id: number;
+  url: string;
+  title: string;
+  description: string;
+  created_at: string;
+}
+
+interface HistoryResponse {
+  date: string;
+  histories: HistoryItem[];
+}
+
+interface FetchedLog {
+  created_at: string;
+  title: string;
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [uploadedFiles, setUploadedFiles] = useState<FileResponse[]>([]);
+  const [logs, setLogs] = useState<FetchedLog[]>([]);
 
   const today = new Date();
   const dateStr = today.toISOString().slice(0, 10);
@@ -39,7 +58,15 @@ export default function Dashboard() {
         const fetchedFiles = await Promise.all(
           files.file_ids.map(id => apiGet<FileResponse>(`/file/${id}`))
         );
+
         setUploadedFiles(fetchedFiles);
+
+        const historyRes = await apiGet<HistoryResponse>(`/history/${dateStr}`);
+        const fetchedLogs = historyRes.histories.map(h => ({
+         created_at: h.created_at,
+         title: h.title,
+        }));
+        setLogs(fetchedLogs);
 
         setLoading(false);
       }catch (err){
@@ -50,8 +77,8 @@ export default function Dashboard() {
     }
 
     fetchUser();
-  }, [navigate, uploadedFiles]);
-
+  }, [navigate]);
+  
   if (loading) return <p className="text-center mt-10">読み込み中...</p>;
   console.log(uploadedFiles);
   return (
@@ -61,7 +88,7 @@ export default function Dashboard() {
         <div className="text-center">
           <Link to={`/summary?date=${dateStr}`}>
             <h1 className="font-[var(--font-shippori)] bg-white inline-block text-custom-purple text-3xl my-20 px-6 py-2 tracking-[0.6em] rounded-lg">
-              本日の要約を見る
+              Summary
             </h1>
           </Link>
         </div>
@@ -77,7 +104,7 @@ export default function Dashboard() {
           </div>
         </div>
         <hr className="border-t-2 border-white my-4" />
-        <GoogleSearch />
+        <GoogleSearch logs={logs}/>
         <hr className="border-t-2 border-white my-4" />
         <ScanData files={uploadedFiles} />
       </div>

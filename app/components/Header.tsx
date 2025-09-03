@@ -10,6 +10,9 @@ const Header = (): JSX.Element => {
 	const toggleFunction = () => {
 		setOpen(prev => !prev);
 	};
+
+  const isLoggedIn = Boolean(localStorage.getItem("access_token"));
+
   return (
     <header className="relative bg-custom-purple text-white p-4 flex justify-between items-center border-b-2 border-white">
       <h1 className="text-2xl font-bold">
@@ -17,14 +20,18 @@ const Header = (): JSX.Element => {
           <img src="/tornado-02-front/image/viofolio.png" alt="Viofolio" className="h-8" />
         </Link>
       </h1>
-      <ScanButton />
-			<ToggleButton
-        open={open}
-        controls="navigation"
-        label="メニューを開きます"
-        onClick={toggleFunction}
-      />
-      <Navigation id="navigation" open={open} />
+      {isLoggedIn && (
+        <>
+          <ScanButton />
+          <ToggleButton
+            open={open}
+            controls="navigation"
+            label="メニューを開きます"
+            onClick={toggleFunction}
+          />
+          <Navigation id="navigation" open={open} />
+        </>
+      )}
     </header>
   );
 };

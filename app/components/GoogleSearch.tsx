@@ -1,28 +1,41 @@
 import type { FC } from "react";
 
-type Props = {
-	onTodaySearch: () => void;
-}
+type Log = {
+  created_at: string;
+  title: string;
+};
 
-export const GoogleSearch = () => {
+type Props = {
+  logs: Log[];
+};
+
+export const GoogleSearch: FC<Props> = ({ logs }) => {
+	const cleanedLogs = logs
+		.filter(log => log.title && log.title !== "Error")
+		.filter((log, index, self) =>
+			index === self.findIndex(l => l.title === log.title)
+		);
+	function formatMonthDay(iso: string) {
+		const d = new Date(iso);
+		return `${d.getMonth() + 1}/${d.getDate()}`;
+	}
+
 	return(
 		<div className="max-w-4xl mx-auto px-4">
 			<h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block">
 				Google検索
 			</h2>
+			{cleanedLogs.length > 0 ? (
 			<ul className="text-white my-3">
-				<li>8/5 ウサギについて</li>
-				<li>8/5 モモンガについてについて</li>
+				{cleanedLogs.map((log) => (
+					<li key={log.created_at}>
+						{formatMonthDay(log.created_at)} {log.title}
+					</li>
+				))}
 			</ul>
-			{/* <ur>
-			{logs?.map((log) => {
-				return (
-						<li key={log.id}>
-							{log.content}
-						</li>
-				);
-			})}
-			</ur> */}
+			) : (
+				<p className="text-white my-3">今日は検索ログがありません</p>
+			)}
 		</div>
 	)
 }

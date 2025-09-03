@@ -18,11 +18,30 @@ interface FileResponse {
   created_at: string;
 }
 
+interface HistoryItem {
+  id: number;
+  url: string;
+  title: string;
+  description: string;
+  created_at: string;
+}
+
+interface HistoryResponse {
+  date: string;
+  histories: HistoryItem[];
+}
+
+interface FetchedLog {
+  created_at: string;
+  title: string;
+}
+
 export default function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [postedDays, setPostedDays] = useState<number[]>([]);
   const [files, setFiles] = useState<FileResponse[]>([]);
+  const [logs, setLogs] = useState<FetchedLog[]>([]);
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -49,6 +68,7 @@ export default function Calendar() {
         const res = await apiGet(`/profile?month=${yyyy}-${mm}`);
         const activeDates = res.active_dates;
         setPostedDays(activeDates);
+
       } catch (err) {
         console.log(err);
         setPostedDays([]);
@@ -70,6 +90,14 @@ export default function Calendar() {
           fileRes.file_ids.map(id => apiGet<FileResponse>(`/file/${id}`))
         );
         setFiles(fetchedFiles);
+        
+        const historyRes = await apiGet<HistoryResponse>(`/history/${dateStr}`);
+        const fetchedLogs = historyRes.histories.map(h => ({
+          created_at: h.created_at,
+          title: h.title,
+        }));
+        setLogs(fetchedLogs);
+        
       } catch (err) {
         console.log(err);
       }
@@ -133,7 +161,7 @@ export default function Calendar() {
               </Link>
             </div>
             <hr className="border-t-2 border-white mb-4" />
-            <GoogleSearch />
+            <GoogleSearch logs={logs}/>
             <hr className="border-t-2 border-white mb-4" />
             <ScanData files={files} />
           </>
