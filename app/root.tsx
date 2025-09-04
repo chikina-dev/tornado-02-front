@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="font-[var(--font-shippori)]">
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />
