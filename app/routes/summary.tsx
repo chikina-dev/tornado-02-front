@@ -345,23 +345,24 @@ export default function Summary() {
                       {...props}
                     />
                   ),
-                  code: ({ inline, className, children, ...props }) => {
-                    if (inline) {
-                      return (
-                        <code className="px-1.5 py-0.5 rounded bg-gray-100 text-pink-700" {...props}>
-                          {children}
-                        </code>
-                      );
-                    }
+                  code: ({ inline, className, children, ...props }: any) => {
+                  if (inline) {
                     return (
-                      <code
-                        className="block w-full overflow-x-auto rounded-lg bg-gray-900 text-gray-100 text-sm p-4"
-                        {...props}
-                      >
+                      <code className="px-1.5 py-0.5 rounded bg-gray-100 text-pink-700" {...props}>
                         {children}
                       </code>
                     );
-                  },
+                  }
+                  return (
+                    <code
+                      className="block w-full overflow-x-auto rounded-lg bg-gray-900 text-gray-100 text-sm p-4"
+                      {...props}
+                    >
+                      {children}
+                    </code>
+                  );
+                },
+
                   table: ({ node, ...props }) => (
                     <div className="my-4 overflow-x-auto">
                       <table className="min-w-full border-separate border-spacing-y-1" {...props} />
