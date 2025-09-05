@@ -10,6 +10,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import GithubSlugger from "github-slugger";
 import { useSearchParams } from "react-router";
+import { useLoading } from "~/contexts/LoadingContext";
 
 
 interface SummaryResponse {
@@ -178,7 +179,7 @@ export default function Summary() {
   
 
   // ここからは date を useState で管理して fetch に渡す
-  const [loading, setLoading] = useState(true);
+  const { setLoading } = useLoading();
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -293,7 +294,6 @@ export default function Summary() {
           />
         </div>
 
-        {loading && <p className="text-center">読み込み中...</p>}
         {error && <p className="text-center text-red-300">エラー: {error}</p>}
 
         {summary && (
@@ -387,7 +387,7 @@ export default function Summary() {
           </div>
         )}
 
-        {!loading && !summary && !error && (
+        {!summary && !error && (
           <p className="text-center">この日の要約はありません。</p>
         )}
       </div>

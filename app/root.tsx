@@ -9,6 +9,8 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css"
+import { LoadingProvider } from "./contexts/LoadingContext";
+import LoadingOverlay from "./components/LoadingOverlay";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -34,7 +36,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <LoadingProvider>
+          {children}
+          <LoadingOverlay />
+        </LoadingProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

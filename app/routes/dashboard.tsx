@@ -4,6 +4,7 @@ import { apiGet } from "../api/auth";
 import Header from "~/components/Header";
 import { GoogleSearch } from "~/components/GoogleSearch";
 import { ScanData } from "~/components/ScanData";
+import { useLoading } from "~/contexts/LoadingContext";
 
 interface FileSummary {
   date: string;
@@ -38,7 +39,7 @@ interface FetchedLog {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const {setLoading} = useLoading();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [uploadedFiles, setUploadedFiles] = useState<FileResponse[]>([]);
   const [logs, setLogs] = useState<FetchedLog[]>([]);
@@ -49,6 +50,7 @@ export default function Dashboard() {
   // 初期ロード：ユーザー情報取得＋アップロード済み画像取得
   useEffect(() => {
     async function fetchUser() {
+      setLoading(true);
       try{
         const data = await apiGet<{ email: string}>("/profile");
         setUserEmail(data.email);
@@ -68,19 +70,18 @@ export default function Dashboard() {
         }));
         setLogs(fetchedLogs);
 
-        setLoading(false);
       }catch (err){
         // 401 など認証エラーならログインページへ
         console.error("Dashboard初期化に失敗:", err);
         navigate("/login");
+      } finally{
+        setLoading(false);
       }
     }
 
     fetchUser();
   }, [navigate]);
   
-  if (loading) return <p className="text-center mt-10">読み込み中...</p>;
-  console.log(uploadedFiles);
   return (
     <div className="min-h-screen bg-custom-purple">
       <Header />

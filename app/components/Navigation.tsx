@@ -2,6 +2,7 @@ import { useEffect, type FC } from "react";
 import { Link } from "react-router";
 import { apiGet, apiPost } from "../api/auth";
 import { useNavigate } from "react-router";
+import { useLoading } from "~/contexts/LoadingContext";
 
 type Props = {
 	open: boolean;
@@ -9,6 +10,7 @@ type Props = {
 }
 export const Navigation: FC<Props> = ({ open, id }) => {
 	const navigate = useNavigate();
+	const { setLoading } = useLoading();
 
 	useEffect(() => {
 		if (open) {
@@ -23,6 +25,7 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 
 	// ログアウト
 	async function handleLogout() {
+		setLoading(true);
 		try {
 			await apiPost("/logout", {}, undefined, true);
 		} catch(err) {
@@ -30,8 +33,8 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 		} finally {
 			localStorage.removeItem("access_token");
 			localStorage.removeItem("refresh_token");
-
 			navigate("/login");
+			setLoading(false);
 		}
 	}
 

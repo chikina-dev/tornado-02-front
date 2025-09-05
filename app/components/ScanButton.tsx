@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { apiUpload } from "~/api/auth";
+import { useLoading } from "~/contexts/LoadingContext";
 
 interface UploadedFile {
   url: string;
@@ -17,11 +18,13 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const { setLoading } = useLoading();
 
   async function uploadFile(file: File) {
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-
+    
     try {
       const result = await apiUpload<UploadedFile>("/upload/file", formData);
       console.log("アップロード成功:", result);
@@ -30,6 +33,8 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
     }catch (error) {
       console.error("アップロード失敗", error);
       throw error;
+    } finally{
+      setLoading(true);
     }
   }
 

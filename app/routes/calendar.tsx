@@ -4,6 +4,7 @@ import { GoogleSearch } from "~/components/GoogleSearch";
 import Header from "~/components/Header";
 import { ScanData } from "~/components/ScanData";
 import { Link } from "react-router";
+import { useLoading } from "~/contexts/LoadingContext";
 
 interface FileSummary {
   date: string;
@@ -42,6 +43,7 @@ export default function Calendar() {
   const [postedDays, setPostedDays] = useState<number[]>([]);
   const [files, setFiles] = useState<FileResponse[]>([]);
   const [logs, setLogs] = useState<FetchedLog[]>([]);
+  const { setLoading } = useLoading();
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -63,7 +65,7 @@ export default function Calendar() {
     const fetchPostedDays = async () => {
       const yyyy = currentMonth.getFullYear();
       const mm = String(currentMonth.getMonth() + 1).padStart(2, "0");
-
+      setLoading(true);
       try {
         const res = await apiGet(`/profile?month=${yyyy}-${mm}`);
         const activeDates = res.active_dates;
@@ -72,6 +74,8 @@ export default function Calendar() {
       } catch (err) {
         console.log(err);
         setPostedDays([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -83,6 +87,7 @@ export default function Calendar() {
     if (!selectedDate) return;
 
     const fetchData = async () => {
+      setLoading(true);
       try {
         const fileRes = await apiGet<FileSummary>(`/files?date=${dateStr}`);
 
@@ -100,6 +105,8 @@ export default function Calendar() {
         
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
