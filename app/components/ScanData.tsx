@@ -22,7 +22,7 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
 
       {/* 横スクロール領域 */}
       <div
-        className="mt-5"
+        className="mt-5 bg-black/20 p-4 rounded-lg"
         style={{
           overflowX: "auto",
           msOverflowStyle: "none", // IE, Edge
@@ -35,7 +35,7 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
             return (
               <div
                 key={file.file_id}
-                className="bg-black p-2 rounded-lg flex-shrink-0 w-64"
+                className="p-2 rounded-lg flex-shrink-0 w-64"
               >
                 <img
                   src={src}

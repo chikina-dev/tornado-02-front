@@ -95,14 +95,7 @@ export default function Dashboard() {
         </div>
         <div className="max-w-4xl mx-auto px-4">
 
-          {/* カードの外で右端に配置 */}
-          <div className="flex justify-end mt-3">
-            <button
-              className="font-[var(--font-shippori)] px-5 py-1 text-white transition border border-white text-lg"
-            >
-              再生成
-            </button>
-          </div>
+          
         </div>
         <hr className="border-t-2 border-white my-4" />
         <GoogleSearch logs={logs}/>

@@ -174,7 +174,9 @@ export default function Summary() {
   const [searchParams] = useSearchParams();
   const [date, setDate] = useState(() => {
   const dateParam = new URLSearchParams(window.location.search).get("date");
-  return dateParam ? new Date(dateParam) : new Date();
+  const initialDate = dateParam ? new Date(dateParam) : new Date();
+  initialDate.setDate(initialDate.getDate() - 1);
+  return initialDate;
 });
   
 
@@ -291,13 +293,14 @@ export default function Summary() {
             value={formatDate(date)}
             onChange={handleDateChange}
             className="bg-gray-700 text-white px-3 py-2 rounded outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-white/30"
+            style={{ colorScheme: 'dark' }}
           />
         </div>
 
         {error && <p className="text-center text-red-300">エラー: {error}</p>}
 
         {summary && (
-          <div className="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr,5fr] gap-8">
             {/* 目次（stickyを外して通常表示） */}
             <TableOfContents markdown={summary} activeId={activeId} />
 
