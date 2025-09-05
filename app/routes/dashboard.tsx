@@ -107,6 +107,7 @@ export default function Dashboard() {
         <GoogleSearch logs={logs}/>
         <hr className="border-t-2 border-white my-4" />
         <ScanData files={uploadedFiles} />
+        <div className="h-20" />
       </div>
     </div>
   );
