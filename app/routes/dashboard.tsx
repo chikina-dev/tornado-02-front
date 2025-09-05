@@ -47,6 +47,20 @@ export default function Dashboard() {
   const today = new Date();
   const dateStr = today.toISOString().slice(0, 10);
 
+  async function refreshUploadedFiles() {
+    setLoading(true);
+    try {
+      const files = await apiGet<FileSummary>("/files");
+      const fetchedFiles = await Promise.all(
+        files.file_ids.map(id => apiGet<FileResponse>(`/file/${id}`))
+      );
+      setUploadedFiles(fetchedFiles);
+    } catch(err) {
+      console.log("ファイル取得失敗", err);
+    } finally {
+      setLoading(false);
+    }
+  }
   // 初期ロード：ユーザー情報取得＋アップロード済み画像取得
   useEffect(() => {
     async function fetchUser() {
@@ -55,21 +69,15 @@ export default function Dashboard() {
         const data = await apiGet<{ email: string}>("/profile");
         setUserEmail(data.email);
        
-        const files = await apiGet<FileSummary>("/files");
         
-        const fetchedFiles = await Promise.all(
-          files.file_ids.map(id => apiGet<FileResponse>(`/file/${id}`))
-        );
-
-        setUploadedFiles(fetchedFiles);
-
         const historyRes = await apiGet<HistoryResponse>(`/history/${dateStr}`);
         const fetchedLogs = historyRes.histories.map(h => ({
-         created_at: h.created_at,
-         title: h.title,
+          created_at: h.created_at,
+          title: h.title,
         }));
         setLogs(fetchedLogs);
-
+        
+        await refreshUploadedFiles();
       }catch (err){
         // 401 など認証エラーならログインページへ
         console.error("Dashboard初期化に失敗:", err);
@@ -84,7 +92,7 @@ export default function Dashboard() {
   
   return (
     <div className="min-h-screen bg-custom-purple">
-      <Header />
+      <Header onUploadSuccess={refreshUploadedFiles}/>
       <div>
         <div className="text-center">
           <Link to={`/summary?date=${dateStr}`}>

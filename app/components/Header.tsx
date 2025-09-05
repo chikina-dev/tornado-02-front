@@ -5,7 +5,11 @@ import { Navigation } from "./Navigation";
 import { ScanButton } from "./ScanButton";
 import { Link } from "react-router";
 
-const Header = (): JSX.Element => {
+interface HeaderProps {
+  onUploadSuccess?: () => void;
+}
+
+const Header = ({ onUploadSuccess }: HeaderProps): JSX.Element => {
 	const [open, setOpen] = useState(false);
 	const toggleFunction = () => {
 		setOpen(prev => !prev);
@@ -22,7 +26,7 @@ const Header = (): JSX.Element => {
       </h1>
       {isLoggedIn && (
         <>
-          <ScanButton />
+          <ScanButton onUploadSuccess={onUploadSuccess}/>
           <ToggleButton
             open={open}
             controls="navigation"

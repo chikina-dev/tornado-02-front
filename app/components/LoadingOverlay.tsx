@@ -1,14 +1,29 @@
+import { useEffect, useState } from "react";
 import { useLoading } from "~/contexts/LoadingContext";
 
 export default function LoadingOverlay() {
 	const { loading } = useLoading();
+  const [dots, setDots] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
 	if (!loading) return null;
 
-	return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="loader border-4 border-t-4 border-white rounded-full w-12 h-12 animate-spin"></div>
-      <p className="text-white ml-4">ロード中...</p>
-    </div>		
-	);
+  return (
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-custom-purple bg-opacity-80 z-50">
+      <div className="flex flex-col items-center">
+        {/* ロゴの円アイコン部分 */}
+        <img src="/tornado-02-front/image/loading.png" alt="モモンガローディング画像" width={150} className="animate-pulse"/>
+        {/* テキスト */}
+        <p className="text-white text-lg tracking-widest animate-pulse">
+          loading{dots}
+        </p>
+      </div>
+    </div>
+  );
 }

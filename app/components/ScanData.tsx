@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { FC, useState } from "react";
 
 interface FileResponse {
   file_id: string;
@@ -12,6 +12,8 @@ interface ScanDataProps {
 }
 
 export const ScanData: FC<ScanDataProps> = ({ files }) => {
+  const [selected, setSelected] = useState<string | null>(null);
+
   if (!files.length) return <p>データがありません</p>;
 
   return (
@@ -25,28 +27,55 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
         className="mt-5"
         style={{
           overflowX: "auto",
-          msOverflowStyle: "none", // IE, Edge
-          scrollbarWidth: "none",   // Firefox
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
         }}
       >
-        <div className="flex gap-4">
+        <div className="flex gap-5">
           {files.map((file) => {
             const src = `data:${file.content_type};base64,${file.content_base64}`;
             return (
               <div
                 key={file.file_id}
-                className="bg-black p-2 rounded-lg flex-shrink-0 w-64"
+                className="bg-white rounded-lg flex-shrink-0 w-64 h-64 flex items-center justify-center cursor-pointer"
+                onClick={() => setSelected(src)}
               >
                 <img
                   src={src}
                   alt={file.filename}
-                  className="w-full h-auto rounded"
+                  className="max-w-full max-h-full object-contain rounded"
                 />
               </div>
             );
           })}
         </div>
       </div>
+
+      {/* モーダル */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ backgroundColor: "rgba(0,0,0,0.3)" }} // 全体の背景も少し透ける
+        >
+          {/* ×ボタン */}
+          <button
+            onClick={() => setSelected(null)}
+            className="absolute top-4 right-4 text-white bg-black text-2xl bg-opacity-70 rounded-full w-12 h-12 flex items-center justify-center font-bold hover:bg-opacity-90"
+          >
+            ×
+          </button>
+
+          {/* 写真の周りの黒いボックスを半透明に */}
+          <div className="p-4 bg-black bg-opacity-50 rounded-lg">
+            <img
+              src={selected}
+              alt="preview"
+              className="max-w-[90vw] max-h-[90vh] object-contain rounded"
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

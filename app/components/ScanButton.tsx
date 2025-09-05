@@ -34,7 +34,7 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
       console.error("アップロード失敗", error);
       throw error;
     } finally{
-      setLoading(true);
+      setLoading(false);
     }
   }
 
