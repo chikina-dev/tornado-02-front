@@ -2,9 +2,11 @@
 
 @theme {
   --color-custom-purple: #6B569D;
+  --color-custom-purple-dark: #5A4A8A; /* 少し暗い紫 */
   --font-shippori: "Shippori Mincho B1", serif;
 }
 
 body {
   font-family: var(--font-shippori);
+  background-color: var(--color-custom-purple-dark);
 }

@@ -24,7 +24,7 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
 
       {/* 横スクロール領域 */}
       <div
-        className="mt-5"
+        className="mt-5 bg-black/20 p-4 rounded-lg"
         style={{
           overflowX: "auto",
           msOverflowStyle: "none",
