@@ -164,6 +164,7 @@ export default function Calendar() {
             <GoogleSearch logs={logs}/>
             <hr className="border-t-2 border-white mb-4" />
             <ScanData files={files} />
+            <div className="h-20" />
           </>
         )}
       </div>
