@@ -42,7 +42,7 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 		<nav
 			id={id}
 			aria-hidden={!open}
-			className={`z-50 fixed top-17 left-0 w-full h-full bg-custom-purple shadow-md flex flex-col items-center transition-all duration-300 ${
+			className={`z-50 fixed top-19 left-0 w-full h-full bg-custom-purple shadow-md flex flex-col items-center transition-all duration-300 ${
 				open ? "opacity-100" : "opacity-0 pointer-events-none"
 			}`}
 		>

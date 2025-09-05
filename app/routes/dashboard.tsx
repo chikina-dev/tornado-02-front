@@ -101,10 +101,6 @@ export default function Dashboard() {
             </h1>
           </Link>
         </div>
-        <div className="max-w-4xl mx-auto px-4">
-
-          
-        </div>
         <hr className="border-t-2 border-white my-4" />
         <GoogleSearch logs={logs}/>
         <hr className="border-t-2 border-white my-4" />

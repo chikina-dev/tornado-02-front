@@ -175,7 +175,7 @@ export default function Summary() {
   const [date, setDate] = useState(() => {
   const dateParam = new URLSearchParams(window.location.search).get("date");
   const initialDate = dateParam ? new Date(dateParam) : new Date();
-  initialDate.setDate(initialDate.getDate() - 1);
+  initialDate.setDate(initialDate.getDate());
   return initialDate;
 });
   
