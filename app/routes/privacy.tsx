@@ -28,17 +28,14 @@ export default function PrivacyPolicyPage() {
           プライバシーポリシー
         </h1>
 
-        <p className="text-sm text-gray-300 mb-10">
-          最終更新日: {lastUpdated}
-        </p>
+        <p className="text-sm text-gray-300 mb-10">最終更新日: {lastUpdated}</p>
 
         <section className="mb-10">
           <h2 id="overview" className="text-xl font-semibold mb-3">
             拡張機能の概要
           </h2>
           <p>
-            本プライバシーポリシーは、Viofolio（以下、「本拡張機能」）が
-            Chrome
+            本プライバシーポリシーは、Viofolio（以下、「本拡張機能」）が Chrome
             拡張としてユーザーの作業を支援する際の個人情報・関連情報の取扱いについて説明するものです。本拡張機能はユーザーのブラウジング体験を支援する目的で動作します。
           </p>
         </section>
@@ -93,7 +90,9 @@ export default function PrivacyPolicyPage() {
             本拡張機能は、上記の目的達成に必要な範囲で以下の第三者へデータを送信・共有する場合があります。
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>インフラ/解析事業者（Vercel, Cloudflare, Google Analytics など）</li>
+            <li>
+              インフラ/解析事業者（Vercel, Cloudflare, Google Analytics など）
+            </li>
             <li>機能提供先API（OpenAI, 自社API, 連携SaaS など）</li>
             <li>法令に基づき開示が必要な公的機関等</li>
           </ul>
@@ -152,7 +151,7 @@ export default function PrivacyPolicyPage() {
               contact@viofolio.com
             </a>
             <br />
-            運営者: Viofolio
+            運営者: Mon-manga
             <br />
           </p>
         </section>
