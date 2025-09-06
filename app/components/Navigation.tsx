@@ -47,11 +47,11 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 			}`}
 		>
 			<ul className="w-full text-center text-3xl tracking-[0.6em] mt-20">
-				<li className="py-7 text-white"><Link to="/dashboard">ホーム</Link></li>
+				<li className="py-7 text-white"><Link to="/">ホーム</Link></li>
 				<li className="py-7 text-white"><Link to="/analyze">分析結果</Link></li>
 				<li className="py-7 text-white"><Link to="/calendar">履歴</Link></li>
 				<li className="py-7 text-white"><Link to="/inquiry">お問い合わせ</Link></li>
-				<li className="py-7 text-white">使い方</li>
+				<li className="py-7 text-white"><Link to="/use">使い方</Link></li>
 				<li className="py-7 text-white"><button onClick={handleLogout}>ログアウト</button></li>
 			</ul>
 		</nav>	

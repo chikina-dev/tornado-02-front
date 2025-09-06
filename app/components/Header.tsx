@@ -20,7 +20,7 @@ const Header = ({ onUploadSuccess }: HeaderProps): JSX.Element => {
   return (
     <header className="relative bg-custom-purple text-white px-4 pt-4 pb-2 flex justify-between items-center border-b-2 border-white">
       <h1 className="text-2xl font-bold">
-        <Link to="/dashboard">
+        <Link to="/">
           <img src="/tornado-02-front/image/viofolio.png" alt="Viofolio" className="h-12" />
         </Link>
       </h1>

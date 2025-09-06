@@ -44,7 +44,7 @@ async function fetchWithAuth(input: RequestInfo, init?: RequestInit): Promise<Re
 
       res = await fetch(input, { ...init, headers: { ...(init?.headers || {}), ...getAuthHeaders()}, credentials: "include"});
     } catch {
-      window.location.href = "/login";
+      window.location.href = "/tornado-02-front/login";
       throw new Error("Unauthorized");
     }
   }

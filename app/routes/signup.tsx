@@ -19,7 +19,14 @@ export default function Signup() {
       const data = await apiPost("/create", { email, password }, undefined, false);
       console.log(data);
       if (data.message !== "Account created successfully") throw new Error("サインアップ失敗");
-      navigate("/dashboard");
+      const loginData = await apiPost("/login", { email, password }, undefined, false);
+      console.log(data);
+      if (!loginData.access_token) throw new Error("ログイン失敗");
+      localStorage.setItem("access_token", loginData.access_token);
+      if (loginData.refresh_token) {
+        localStorage.setItem("refresh_token", loginData.refresh_token);
+      }
+      navigate("/use");
     } catch (err) {
       setError((err as Error).message);
     } finally {
