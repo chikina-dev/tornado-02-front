@@ -10,9 +10,14 @@ import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { useLoading } from "~/contexts/LoadingContext";
 
 // ========= 型 =========
-interface AnalysisApiResponse { markdown: string }
+interface AnalysisApiResponse {
+  markdown: string;
+}
 
-interface ChartData { labels: string[]; values: number[] }
+interface ChartData {
+  labels: string[];
+  values: number[];
+}
 
 // ========= rehype-sanitize: 見出しの id と a の id/href/name を許可 =========
 const sanitizeSchema = {
@@ -59,7 +64,10 @@ function preprocessMarkdown(raw: string): string {
     // if (/^<a\s+id="[^"]+"\s*><\/a>\s*$/.test(line)) continue;
 
     const m = line.match(/^(#{1,6})\s+(.*)$/);
-    if (!m) { out.push(line); continue; }
+    if (!m) {
+      out.push(line);
+      continue;
+    }
 
     const level = m[1].length;
     const text = m[2].trim();
@@ -113,7 +121,9 @@ const DummyChart: React.FC<{ data: ChartData }> = ({ data }) => {
             aria-label={`Day ${index + 1} value ${value}`}
             role="img"
           />
-          <span className="text-sm text-gray-400 mt-2">{data.labels[index]}</span>
+          <span className="text-sm text-gray-400 mt-2">
+            {data.labels[index]}
+          </span>
         </div>
       ))}
     </div>
@@ -121,7 +131,7 @@ const DummyChart: React.FC<{ data: ChartData }> = ({ data }) => {
 };
 
 // ========= 本体 =========
-export default function Analyze(): JSX.Element {
+export default function Analyze(): React.JSX.Element {
   const navigate = useNavigate();
   const { setLoading } = useLoading();
   const [llmFeedback, setLlmFeedback] = useState<string | null>(null);
@@ -134,13 +144,22 @@ export default function Analyze(): JSX.Element {
     return [...Array(7)].map((_, i) => {
       const d = new Date();
       d.setDate(d.getDate() - (6 - i));
-      return d.toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" });
+      return d.toLocaleDateString("ja-JP", {
+        month: "numeric",
+        day: "numeric",
+      });
     });
   }, []);
 
-  const modifiedAnalysisData: { dailySummaryCount: ChartData } = useMemo(() => ({
-    dailySummaryCount: { labels: last7Days, values: analysisData.dailySummaryCount.values },
-  }), [last7Days]);
+  const modifiedAnalysisData: { dailySummaryCount: ChartData } = useMemo(
+    () => ({
+      dailySummaryCount: {
+        labels: last7Days,
+        values: analysisData.dailySummaryCount.values,
+      },
+    }),
+    [last7Days]
+  );
 
   // API呼び出し
   useEffect(() => {
@@ -158,7 +177,7 @@ export default function Analyze(): JSX.Element {
         yesterday.setDate(today.getDate() - 1);
 
         const requestPath = `/analysis/${yesterday.getFullYear()}/${yesterday.getMonth() + 1}/${yesterday.getDate()}`;
-        const data = await apiGet<AnalysisApiResponse>(requestPath, { signal: controller.signal } as any);
+        const data = await apiGet<AnalysisApiResponse>(requestPath);
 
         const cleaned = preprocessMarkdown(data.markdown ?? "");
         setLlmFeedback(cleaned);
@@ -168,10 +187,16 @@ export default function Analyze(): JSX.Element {
         if (err instanceof Error) {
           const msg = err.message || "";
           // 認証
-          if (msg.includes("401")) { navigate("/login"); return; }
+          if (msg.includes("401")) {
+            navigate("/login");
+            return;
+          }
           // データなし
-          if (msg.includes("404")) { setError("データ不足"); }
-          else { setError(msg); }
+          if (msg.includes("404")) {
+            setError("データ不足");
+          } else {
+            setError(msg);
+          }
         } else {
           setError("予期せぬエラーが発生しました。");
         }
@@ -180,7 +205,9 @@ export default function Analyze(): JSX.Element {
       }
     })();
 
-    return () => { controller.abort(); };
+    return () => {
+      controller.abort();
+    };
   }, [navigate, setLoading, retryKey]);
 
   return (
@@ -196,25 +223,38 @@ export default function Analyze(): JSX.Element {
         </div>
 
         {/* 主要指標 */}
-        <section aria-labelledby="metrics" className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <h2 id="metrics" className="sr-only">主要指標</h2>
+        <section
+          aria-labelledby="metrics"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        >
+          <h2 id="metrics" className="sr-only">
+            主要指標
+          </h2>
 
           {/* URL評価の平均値 */}
           <article className="bg-gray-800/50 p-4 rounded-lg text-center shadow">
             <p className="text-sm text-gray-400">学習難易度</p>
-            <p className="text-2xl font-bold">{analysisData.averageUrlScore.value}</p>
-            <p className={`text-sm ${analysisData.averageUrlScore.change.startsWith("+") ? "text-lime-400" : "text-red-400"}`}>
+            <p className="text-2xl font-bold">
+              {analysisData.averageUrlScore.value}
+            </p>
+            <p
+              className={`text-sm ${analysisData.averageUrlScore.change.startsWith("+") ? "text-lime-400" : "text-red-400"}`}
+            >
               前日比: {analysisData.averageUrlScore.change}
             </p>
           </article>
 
           {/* 注目のカテゴリ */}
           <article className="bg-gray-800/50 p-4 rounded-lg col-span-1 md:col-span-2 shadow">
-            <p className="text-sm text-gray-400 mb-4 text-center">蓄積された知識ランキング</p>
+            <p className="text-sm text-gray-400 mb-4 text-center">
+              蓄積された知識ランキング
+            </p>
             <ol className="space-y-3" aria-label="知識ランキング">
               {analysisData.topCategories.map((category) => (
                 <li key={category.rank} className="flex items-baseline">
-                  <p className="text-lg font-bold text-violet-300 w-16 text-center">{category.rank}位</p>
+                  <p className="text-lg font-bold text-violet-300 w-16 text-center">
+                    {category.rank}位
+                  </p>
                   <p className="text-xl">{category.name}</p>
                 </li>
               ))}
@@ -223,27 +263,42 @@ export default function Analyze(): JSX.Element {
         </section>
 
         {/* 要約件数グラフ */}
-        <section aria-labelledby="summary-count" className="bg-gray-800/50 p-4 rounded-lg shadow">
+        <section
+          aria-labelledby="summary-count"
+          className="bg-gray-800/50 p-4 rounded-lg shadow"
+        >
           <p className="text-sm text-gray-400 text-center mb-4">学習した件数</p>
           <DummyChart data={modifiedAnalysisData.dailySummaryCount} />
         </section>
 
         {/* LLMからのフィードバック */}
-        <section aria-labelledby="llm-feedback" className="bg-white text-gray-900 p-5 md:p-6 rounded-xl shadow-lg">
-          <h2 id="llm-feedback" className="sr-only">LLMフィードバック</h2>
+        <section
+          aria-labelledby="llm-feedback"
+          className="bg-white text-gray-900 p-5 md:p-6 rounded-xl shadow-lg"
+        >
+          <h2 id="llm-feedback" className="sr-only">
+            LLMフィードバック
+          </h2>
 
           {llmFeedback && (
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw as any, rehypeSlug as any, [rehypeSanitize as any, sanitizeSchema as any]]}
-              className="prose prose-neutral prose-lg max-w-none"
-            >
-              {llmFeedback}
-            </ReactMarkdown>
+            <div className="prose prose-neutral prose-lg max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[
+                  rehypeRaw as any,
+                  rehypeSlug as any,
+                  [rehypeSanitize as any, sanitizeSchema as any],
+                ]}
+              >
+                {llmFeedback}
+              </ReactMarkdown>
+            </div>
           )}
 
           {!llmFeedback && !error && (
-            <p className="text-center text-gray-500">LLMフィードバックを読み込み中...</p>
+            <p className="text-center text-gray-500">
+              LLMフィードバックを読み込み中...
+            </p>
           )}
 
           {error && (
