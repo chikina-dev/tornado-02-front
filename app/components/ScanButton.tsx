@@ -48,8 +48,6 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
       case "file":
         fileInputRef.current?.click();
         break;
-      case "scan":
-        break;
     }
   }
 
@@ -100,20 +98,12 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
                 写真を撮る
               </button>
             </li>
-            <li className="border-b border-b-gray-300">
+            <li className="border-b-gray-300">
               <button
                 onClick={() => handleSelect("file")}
                 className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
               >
                 写真を選択する
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleSelect("scan")}
-                className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
-              >
-                スキャンする
               </button>
             </li>
           </ul>

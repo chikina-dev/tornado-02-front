@@ -53,7 +53,11 @@ export default function Home() {
   const [logs, setLogs] = useState<FetchedLog[]>([]);
   
   const today = new Date();
-  const dateStr = today.toISOString().slice(0, 10);
+  const dateStr = today.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).replace(/\//g, "-"); // "2025-09-08"
   
   async function refreshUploadedFiles() {
     setLoading(true);
@@ -84,6 +88,7 @@ export default function Home() {
           title: h.title,
         }));
         setLogs(fetchedLogs);
+        console.log(fetchedLogs);
         
         await refreshUploadedFiles();
       }catch (err){
