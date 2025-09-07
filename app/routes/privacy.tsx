@@ -1,5 +1,8 @@
 import type { Route } from "./+types/privacy";
 import Header from "~/components/Header";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
+import { useLoading } from "~/contexts/LoadingContext";
+import { useEffect } from "react";
 
 export function meta({}: Route.MetaArgs) {
   const title = "Privacy Policy | Viofolio";
@@ -19,6 +22,16 @@ export function meta({}: Route.MetaArgs) {
 
 export default function PrivacyPolicyPage() {
   const lastUpdated = "2025-09-07"; // 最終更新日を都度更新
+  const isAuthenticated = useAuthCheck();
+  const { loading, setLoading } = useLoading();
+
+  useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, setLoading]);
 
   return (
     <div className="min-h-screen bg-custom-purple">

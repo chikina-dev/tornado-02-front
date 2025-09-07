@@ -10,6 +10,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import GithubSlugger from "github-slugger";
 import { useSearchParams } from "react-router";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
 import { useLoading } from "~/contexts/LoadingContext";
 
 
@@ -178,10 +179,11 @@ export default function Summary() {
   initialDate.setDate(initialDate.getDate());
   return initialDate;
 });
+	const isAuthenticated = useAuthCheck();
+	const { loading, setLoading } = useLoading();
   
 
   // ここからは date を useState で管理して fetch に渡す
-  const { setLoading } = useLoading();
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -237,6 +239,9 @@ export default function Summary() {
 
   useEffect(() => {
     async function fetchSummary() {
+      if (isAuthenticated === null) {
+        setLoading(true);
+      }      
       setLoading(true);
       setError(null);
       setSummary(null);

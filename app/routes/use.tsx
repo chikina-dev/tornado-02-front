@@ -1,10 +1,25 @@
 import Header from "~/components/Header";
 import { Upload, FileText, Menu } from "lucide-react";
-
-
-
+import { useEffect, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
+import { useLoading } from "~/contexts/LoadingContext";
 
 export default function HowToUse() {
+	const [openInstall, setOpenInstall] = useState(true);
+	const [openUsage, setOpenUsage] = useState(true);
+
+	const isAuthenticated = useAuthCheck();
+	const { loading, setLoading } = useLoading();
+
+  useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, setLoading]);
+
   return (
     <>
       <Header />
@@ -64,7 +79,7 @@ export default function HowToUse() {
 					{/* 手順 */}
 					<section>
 						<h2 className="px-2 py-1 text-custom-purple text-xl bg-white inline-block rounded">
-							手順
+							学習手順
 						</h2>
 						<ol className="list-inside mt-4 text-sm space-y-4">
 							<li>
@@ -91,8 +106,18 @@ export default function HowToUse() {
 							拡張機能を使うと、Chromeで検索するだけで、そのサイトで学習したことを記録として残すことができます。<br />
 							以下では、導入方法とその設定方法について説明します。
 						</p>
-						<h3 className="text-md mt-4">＜ 導入方法 ＞</h3>
-						<ol className="list-inside text-sm space-y-4 mb-10">
+						<h3
+							className="text-md mt-4 cursor-pointer flex"
+							onClick={() => setOpenInstall(!openInstall)}	
+						>
+							＜ 導入方法 ＞
+							{openInstall ? (
+								<ChevronDown className="w-6 h-6" />
+							) : (
+								<ChevronUp className="w-6 h-6" />
+							)}
+						</h3>
+						{openInstall && <ol className="list-inside text-sm space-y-4 mb-10">
 							<li>
 								① dist.zipをダウンロード
 								<div className="pt-4 pl-4 pb-2">
@@ -122,8 +147,19 @@ export default function HowToUse() {
 								<img src="/tornado-02-front/image/description4.png" alt="" className="mt-4 mb-10"/>
 							</li>
 						</ol>
-						<h3 className="text-md mt-4">＜ 使用方法 ＞</h3>
-						<ol className="list-inside text-sm space-y-4 mb-10">
+						}
+						<h3
+							className="text-md mt-4 cursor-pointer flex"
+							onClick={() => setOpenUsage(!openUsage)}	
+						>
+							＜ 使用方法 ＞
+							{openUsage ? (
+								<ChevronDown className="w-6 h-6" />
+							) : (
+								<ChevronUp className="w-6 h-6" />
+							)}
+						</h3>
+						{openUsage && <ol className="list-inside text-sm space-y-4 mb-10">
 							<li>
 								① 拡張機能一覧から「Viofolio」を選択する。
 								<img src="/tornado-02-front/image/description6.png" alt="" className="mt-4 mb-10"/>
@@ -145,6 +181,7 @@ export default function HowToUse() {
 								<img src="/tornado-02-front/image/description10.png" alt="" className="mt-4 mb-10"/>
 							</li>
 						</ol>
+						}
 					</section>
 				</div>
 			</div>
