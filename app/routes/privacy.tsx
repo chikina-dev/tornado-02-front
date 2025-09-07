@@ -148,7 +148,8 @@ export default function PrivacyPolicyPage() {
             <br />
             メール:{" "}
             <a className="underline" href="mailto:contact@viofolio.com">
-              contact@viofolio.com
+              <p>contact@viofolio.com</p>
+              <p>b1022016@fun.ac.jp</p>
             </a>
             <br />
             運営者: Mon-manga

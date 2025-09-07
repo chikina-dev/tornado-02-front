@@ -46,12 +46,13 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 				open ? "opacity-100" : "opacity-0 pointer-events-none"
 			}`}
 		>
-			<ul className="w-full text-center text-3xl tracking-[0.6em] mt-20">
+			<ul className="w-full text-center text-2xl tracking-[0.6em] mt-5">
 				<li className="py-7 text-white"><Link to="/">ホーム</Link></li>
 				<li className="py-7 text-white"><Link to="/analyze">分析結果</Link></li>
 				<li className="py-7 text-white"><Link to="/calendar">履歴</Link></li>
 				<li className="py-7 text-white"><Link to="/inquiry">お問い合わせ</Link></li>
 				<li className="py-7 text-white"><Link to="/use">使い方</Link></li>
+				<li className="py-7 text-white"><Link to="/privacy">プライバシーポリシー</Link></li>
 				<li className="py-7 text-white"><button onClick={handleLogout}>ログアウト</button></li>
 			</ul>
 		</nav>	
