@@ -1,13 +1,24 @@
 import Header from "~/components/Header";
 import { Upload, FileText, Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
-
+import { useAuthCheck } from "~/hooks/useAuthCheck";
+import { useLoading } from "~/contexts/LoadingContext";
 
 export default function HowToUse() {
 	const [openInstall, setOpenInstall] = useState(true);
 	const [openUsage, setOpenUsage] = useState(true);
+
+	const isAuthenticated = useAuthCheck();
+	const { loading, setLoading } = useLoading();
+
+  useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, setLoading]);
 
   return (
     <>

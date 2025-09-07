@@ -5,6 +5,7 @@ import Header from "~/components/Header";
 import { ScanData } from "~/components/ScanData";
 import { Link } from "react-router";
 import { useLoading } from "~/contexts/LoadingContext";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
 
 interface FileSummary {
   date: string;
@@ -43,7 +44,9 @@ export default function Calendar() {
   const [postedDays, setPostedDays] = useState<number[]>([]);
   const [files, setFiles] = useState<FileResponse[]>([]);
   const [logs, setLogs] = useState<FetchedLog[]>([]);
-  const { setLoading } = useLoading();
+
+	const isAuthenticated = useAuthCheck();
+	const { loading, setLoading } = useLoading();
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -62,6 +65,10 @@ export default function Calendar() {
 
   // postedDays の取得
   useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    }
+    
     const fetchPostedDays = async () => {
       const yyyy = currentMonth.getFullYear();
       const mm = String(currentMonth.getMonth() + 1).padStart(2, "0");

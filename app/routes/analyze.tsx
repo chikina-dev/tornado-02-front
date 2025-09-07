@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { useLoading } from "~/contexts/LoadingContext";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
 
 // ========= 型 =========
 interface AnalysisApiResponse {
@@ -123,14 +124,19 @@ const DataChart: React.FC<{ data: ChartData }> = ({ data }) => {
 // ========= 本体 =========
 export default function Analyze(): React.JSX.Element {
   const navigate = useNavigate();
-  const { setLoading } = useLoading();
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
   const abortRef = useRef<AbortController | null>(null);
 
+  const isAuthenticated = useAuthCheck();
+  const { loading, setLoading } = useLoading();
+
   // API呼び出し
   useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    }
     const controller = new AbortController();
     abortRef.current = controller;
 
@@ -255,7 +261,7 @@ export default function Analyze(): React.JSX.Element {
     return () => {
       controller.abort();
     };
-  }, [navigate, setLoading, retryKey]);
+  }, [navigate, setLoading, retryKey, isAuthenticated]);
 
   return (
     <div className="min-h-screen bg-custom-purple text-white">
