@@ -16,7 +16,7 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
 
   return (
     <div className="max-w-4xl mx-auto px-4">
-      <h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block">
+      <h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block rounded-lg">
         スキャンデータ
       </h2>
       {files.length ? (
