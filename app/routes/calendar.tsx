@@ -5,6 +5,7 @@ import Header from "~/components/Header";
 import { ScanData } from "~/components/ScanData";
 import { Link } from "react-router";
 import { useLoading } from "~/contexts/LoadingContext";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
 
 interface FileSummary {
   date: string;
@@ -43,7 +44,9 @@ export default function Calendar() {
   const [postedDays, setPostedDays] = useState<number[]>([]);
   const [files, setFiles] = useState<FileResponse[]>([]);
   const [logs, setLogs] = useState<FetchedLog[]>([]);
-  const { setLoading } = useLoading();
+
+	const isAuthenticated = useAuthCheck();
+	const { loading, setLoading } = useLoading();
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -62,6 +65,10 @@ export default function Calendar() {
 
   // postedDays の取得
   useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    }
+    
     const fetchPostedDays = async () => {
       const yyyy = currentMonth.getFullYear();
       const mm = String(currentMonth.getMonth() + 1).padStart(2, "0");
@@ -95,14 +102,14 @@ export default function Calendar() {
           fileRes.file_ids.map(id => apiGet<FileResponse>(`/file/${id}`))
         );
         setFiles(fetchedFiles);
-        
+
         const historyRes = await apiGet<HistoryResponse>(`/history/${dateStr}`);
         const fetchedLogs = historyRes.histories.map(h => ({
           created_at: h.created_at,
           title: h.title,
         }));
         setLogs(fetchedLogs);
-        
+
       } catch (err) {
         console.log(err);
       } finally {
@@ -124,7 +131,8 @@ export default function Calendar() {
         {/* 月切替 */}
         <div className="flex justify-center items-center gap-4 my-4 text-white">
           <button onClick={prevMonth} className="hover:scale-110 transition cursor-pointer">◀</button>
-          <span className="text-2xl">{month + 1} 月</span>
+          {/* <span className="text-2xl">{month + 1} 月</span> */}
+          <span className="text-2xl">{year} 年 {month + 1} 月</span>
           <button onClick={nextMonth} className="hover:scale-110 transition cursor-pointer">▶</button>
         </div>
 
@@ -168,7 +176,7 @@ export default function Calendar() {
               </Link>
             </div>
             <hr className="border-t-2 border-white mb-4" />
-            <GoogleSearch logs={logs}/>
+            <GoogleSearch logs={logs} />
             <hr className="border-t-2 border-white mb-4" />
             <ScanData files={files} />
             <div className="h-20" />

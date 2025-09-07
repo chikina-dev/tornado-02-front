@@ -1,6 +1,8 @@
-import { Link } from "react-router";
+import { useEffect } from "react";
 import ErrorMessage from "~/components/ErrorMessage";
 import Header from "~/components/Header";
+import { useLoading } from "~/contexts/LoadingContext";
+import { useAuthCheck } from "~/hooks/useAuthCheck";
 
 interface AuthFormProps {
   mode: "login" | "signup";
@@ -9,6 +11,16 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ mode, error, onSubmit }: AuthFormProps) {
+  const isAuthenticated = useAuthCheck();
+  const { loading, setLoading } = useLoading();
+
+  useEffect(() => {
+    if (isAuthenticated === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, setLoading]);
   return (
     <>
       <Header />

@@ -10,22 +10,16 @@ type Props = {
 export const ToggleButton: FC<Props> = ({ open, controls, label, onClick}) => {
 	return (
     <button
-      className="flex flex-col justify-center items-center w-8 h-8 space-y-1.5 ml-8"
+      className="flex flex-col justify-center items-center w-13 h-13 space-y-1.5"
       type="button"
       aria-controls={controls}
       aria-expanded={open}
       aria-label={label}
       onClick={onClick}
-    >
-      <span
-        className={`block w-8 h-1 bg-white transition-transform duration-300 ${open ? "rotate-45 translate-y-3" : ""}`}
-      ></span>
-      <span
-        className={`block w-8 h-1 bg-white transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100"}`}
-      ></span>
-      <span
-        className={`block w-8 h-1 bg-white transition-transform duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
-      ></span>
+      >
+    <div className="w-13 h-13 rounded-full bg-white flex items-center justify-center shadow-md">
+		  <img src="/tornado-02-front/image/menu.png" alt="メニューボタン" width="30" />
+    </div>
     </button>
 	)
 }

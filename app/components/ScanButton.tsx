@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { apiUpload } from "~/api/auth";
 import { useLoading } from "~/contexts/LoadingContext";
+import { Upload } from "lucide-react";
 
 interface UploadedFile {
   url: string;
@@ -48,8 +49,6 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
       case "file":
         fileInputRef.current?.click();
         break;
-      case "scan":
-        break;
     }
   }
 
@@ -75,12 +74,14 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   }, []);
 
 	return (
-    <div className="relative inline-block ml-auto">
+    <div className="relative inline-block">
       <button
         ref={buttonRef}
         onClick={() => setOpen(!open)}
-        className="font-[var(--font-shippori)] px-8 py-1 text-custom-purple bg-white">
-        アップロード
+        className="py-1">
+        <div className="w-13 h-13 rounded-full bg-white flex items-center justify-center shadow-md">
+          <Upload className="w-7 h-7 text-custom-purple" />
+        </div>
       </button>
       {/* メニュー */}
         <div
@@ -100,20 +101,12 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
                 写真を撮る
               </button>
             </li>
-            <li className="border-b border-b-gray-300">
+            <li className="border-b-gray-300">
               <button
                 onClick={() => handleSelect("file")}
                 className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
               >
                 写真を選択する
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleSelect("scan")}
-                className="w-full text-left px-4 py-1.5 hover:bg-gray-100 rounded-md"
-              >
-                スキャンする
               </button>
             </li>
           </ul>
