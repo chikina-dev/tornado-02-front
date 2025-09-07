@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { apiUpload } from "~/api/auth";
 import { useLoading } from "~/contexts/LoadingContext";
+import { Upload } from "lucide-react";
 
 interface UploadedFile {
   url: string;
@@ -73,12 +74,14 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   }, []);
 
 	return (
-    <div className="relative inline-block ml-auto">
+    <div className="relative inline-block">
       <button
         ref={buttonRef}
         onClick={() => setOpen(!open)}
-        className="font-[var(--font-shippori)] px-8 py-1 text-custom-purple bg-white">
-        アップロード
+        className="py-1">
+        <div className="w-13 h-13 rounded-full bg-white flex items-center justify-center shadow-md">
+          <Upload className="w-7 h-7 text-custom-purple" />
+        </div>
       </button>
       {/* メニュー */}
         <div
