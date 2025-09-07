@@ -45,8 +45,7 @@ export default function HowToUse() {
 								</div>
 								<div className="mt-4">
 									<p className="text-sm">
-										データをアップロードする際、
-										スキャン、写真を選択、写真を撮るの3つの選択ができます。
+										データをアップロードする際、「写真を選択」、「写真を撮る」の2つの選択ができます。
 									</p>
 								</div>
 							</div>
@@ -60,7 +59,7 @@ export default function HowToUse() {
 								</div>
 								<div className="mt-4">
 									<p className="text-sm">
-										過去の要約カードを日付ごとに見れます。カレンダーマークをタップすることで、日付を変更できます。
+										過去の要約カードを日付ごとに確認できます。カレンダーマークをタップして日付を変更すると、その日の要約を表示できます。
 									</p>
 								</div>
 							</div>
@@ -71,6 +70,11 @@ export default function HowToUse() {
 										<img src="/tornado-02-front/image/menu.png" alt="メニューボタン" width="20" />
 									</div>
 									<h3 className="text-lg">メニューボタン</h3>
+								</div>
+								<div className="mt-4">
+									<p className="text-sm">
+										画面右上のアイコンをタップすると、アプリ内のページ一覧が表示されます。
+									</p>
 								</div>
 							</div>
 						</div>
@@ -83,16 +87,16 @@ export default function HowToUse() {
 						</h2>
 						<ol className="list-inside mt-4 text-sm space-y-4">
 							<li>
-								❶ アップロードボタンorGoogle検索により、 その日の学習データを蓄積。
+								❶ アップロードボタンまたはGoogle検索により、その日の学習データを蓄積。
 							</li>
 							<li>
-								❷ 1日の要約が完成するとホームの「新着の要約を見る」にNEWとつき、タップでその日の要約を見ることができます。
+								❷ 1日の要約が完成すると、ホームの「新着の要約を見る」にNEWマークが表示されます。タップすると、その日の要約を確認できます。（0時に更新）
 							</li>
 							<li>
-								❸ また、履歴からカレンダーで過去の検索履歴やファイルを見ることも可能です。
+								❸ また、履歴ページからカレンダーで投稿した日付を選択することで、過去の検索履歴やファイルを見ることも可能です。
 							</li>
 							<li>
-								❹ 記録がたまると、「分析結果」から過去の学習内容の総評などを確認することもできます
+								❹ 記録がたまると、分析結果ページから過去の学習内容の総評などを確認することもできます
 							</li>
 						</ol>
 					</section>
@@ -103,7 +107,7 @@ export default function HowToUse() {
 							拡張機能について
 						</h2>
 						<p>
-							拡張機能を使うと、Chromeで検索するだけで、そのサイトで学習したことを記録として残すことができます。<br />
+							拡張機能を使うと、Google Chromeで調べ物をするだけで、そのサイトで学習したことを記録として残すことができます。<br />
 							以下では、導入方法とその設定方法について説明します。
 						</p>
 						<h3
