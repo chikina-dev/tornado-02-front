@@ -1,4 +1,7 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
+
+
 
 interface FileResponse {
   file_id: string;
