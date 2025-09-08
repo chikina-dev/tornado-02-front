@@ -123,7 +123,7 @@ export default function Calendar() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-custom-purple">
+      <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
         {/* カレンダータイトル */}
         <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">履歴</h2>
         <hr className="border-t-2 border-white" />

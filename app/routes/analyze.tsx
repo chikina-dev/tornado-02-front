@@ -264,7 +264,7 @@ export default function Analyze(): React.JSX.Element {
   }, [navigate, setLoading, retryKey, isAuthenticated]);
 
   return (
-    <div className="min-h-screen bg-custom-purple text-white">
+    <div className="min-h-screen bg-custom-purple text-white w-full overflow-x-hidden">
       <Header />
 
         <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">分析結果</h2>

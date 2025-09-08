@@ -24,7 +24,7 @@ export default function AuthForm({ mode, error, onSubmit }: AuthFormProps) {
   return (
     <>
       <Header />
-      <div className="bg-custom-purple min-h-screen">
+      <div className="bg-custom-purple min-h-screen w-full overflow-x-hidden">
       <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">お問い合わせ</h2>
       <hr className="border-t-2 border-white" />
         <div className="max-w-md mx-auto mt-20 p-8 bg-custom-purple text-white rounded">

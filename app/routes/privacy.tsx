@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
   }, [isAuthenticated, setLoading]);
 
   return (
-    <div className="min-h-screen bg-custom-purple">
+    <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
       <Header />
       <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">プライバシーポリシー</h2>
       <hr className="border-t-2 border-white" />

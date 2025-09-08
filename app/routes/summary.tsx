@@ -285,7 +285,7 @@ export default function Summary() {
   }
 
   return (
-    <div className="min-h-screen bg-custom-purple text-white">
+    <div className="min-h-screen bg-custom-purple text-white w-full overflow-x-hidden">
       <Header />
       <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">要約</h2>
       <hr className="border-t-2 border-white" />

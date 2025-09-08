@@ -126,7 +126,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-custom-purple">
+    <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
       <Header onUploadSuccess={refreshUploadedFiles} />
       <div>
       <div className="text-center">
