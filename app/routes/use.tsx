@@ -21,9 +21,9 @@ export default function HowToUse() {
   }, [isAuthenticated, setLoading]);
 
   return (
-    <>
+    <div className="bg-custom-purple min-h-screen w-full overflow-x-hidden">
       <Header />
-			<div className="bg-custom-purple min-h-screen w-full overflow-x-hidden">
+			<div>
 				<h1 className="text-3xl text-center tracking-[0.4em] text-white py-2">
 					使い方
 				</h1>
@@ -189,6 +189,6 @@ export default function HowToUse() {
 					</section>
 				</div>
 			</div>
-    </>
+    </div>
   );
 }

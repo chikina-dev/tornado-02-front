@@ -126,9 +126,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
+  <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
       <Header onUploadSuccess={refreshUploadedFiles} />
-      <div>
+    <div> 
       <div className="text-center">
         <div className="relative my-20">
           <button
@@ -151,7 +151,7 @@ export default function Home() {
         <hr className="border-t-2 border-white my-4" />
         <ScanData files={uploadedFiles} />
         <div className="h-20" />
-      </div>
     </div>
+  </div>
   );
 }

@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
       <Header />
-      <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">プライバシーポリシー</h2>
+      <h2 className="text-white text-2xl md:text-3xl text-center tracking-[0.4em] p-2">プライバシーポリシー</h2>
       <hr className="border-t-2 border-white" />
       <main className="mx-auto max-w-3xl px-6 py-10 leading-relaxed text-white">
 

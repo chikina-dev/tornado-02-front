@@ -10,9 +10,9 @@ interface AuthFormProps {
 
 export default function AuthForm({ mode, error, onSubmit }: AuthFormProps) {
   return (
-    <>
+    <div className="bg-custom-purple min-h-screen w-full overflow-x-hidden">
       <Header />
-      <div className="bg-custom-purple min-h-screen">
+      <div>
         <h1 className="text-3xl text-center tracking-[0.4em] text-white py-0.5">
           {mode === "login" ? "ログイン" : "サインアップ"}
         </h1>
@@ -71,6 +71,6 @@ export default function AuthForm({ mode, error, onSubmit }: AuthFormProps) {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

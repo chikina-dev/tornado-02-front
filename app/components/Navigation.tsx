@@ -42,11 +42,11 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 		<nav
 			id={id}
 			aria-hidden={!open}
-			className={`z-50 fixed top-21.5 left-0 w-full h-full bg-custom-purple shadow-md flex flex-col items-center transition-all duration-300 ${
+			className={`z-50 fixed top-21.5 left-0 w-full h-screen bg-custom-purple shadow-md flex flex-col items-center overflow-hidden transition-all duration-300  ${
 				open ? "opacity-100" : "opacity-0 pointer-events-none"
 			}`}
 		>
-			<ul className="w-full text-center text-2xl tracking-[0.6em] mt-5  overflow-y-auto flex-1">
+			<ul className="w-full text-center text-2xl tracking-[0.6em] mt-5  overflow-y-auto flex-1 mb-20">
 				<li className="py-7 text-white"><Link to="/">ホーム</Link></li>
 				<li className="py-7 text-white"><Link to="/analyze">分析結果</Link></li>
 				<li className="py-7 text-white"><Link to="/calendar">履歴</Link></li>

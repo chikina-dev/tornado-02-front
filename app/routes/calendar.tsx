@@ -121,9 +121,9 @@ export default function Calendar() {
   }, [selectedDate, dateStr]);
 
   return (
-    <>
+    <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
       <Header />
-      <div className="min-h-screen bg-custom-purple w-full overflow-x-hidden">
+      <div>
         {/* カレンダータイトル */}
         <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">履歴</h2>
         <hr className="border-t-2 border-white" />
@@ -183,6 +183,6 @@ export default function Calendar() {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
