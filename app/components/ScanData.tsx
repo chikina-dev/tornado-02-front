@@ -1,28 +1,20 @@
 import { useState } from "react";
 import type { FC } from "react";
-
-
-
 interface FileResponse {
   file_id: string;
   filename: string;
   content_type: string;
   content_base64: string;
 }
-
 interface ScanDataProps {
   files: FileResponse[];
 }
-
 export const ScanData: FC<ScanDataProps> = ({ files }) => {
   const [selected, setSelected] = useState<string | null>(null);
-
   return (
     <div className="max-w-4xl mx-auto px-4">
-      <h2 className="font-[var(--font-shippori)] px-2 py-0.5 text-custom-purple text-xl text-left bg-white inline-block rounded-lg">
-        スキャンデータ
-      </h2>
-      {files.length ? (
+    {files.length
+      ? (
         <>
           {/* 横スクロール領域 */}
           <div
@@ -33,27 +25,26 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
               scrollbarWidth: "none",
             }}
           >
-<div className="flex gap-5 p-2">
-  {files.map((file) => {
-    const src = `data:${file.content_type};base64,${file.content_base64}`;
-    return (
-      <div
-        key={file.file_id}
-        className="bg-white rounded-lg flex-shrink-0 w-40 sm:w-64 h-40 sm:h-64 flex items-center justify-center cursor-pointer"
-        onClick={() => setSelected(src)}
-      >
-        <img
-          src={src}
-          alt={file.filename}
-          className="max-w-full max-h-full object-contain rounded"
-        />
-      </div>
-    );
-  })}
-</div>
-
+            <div className="flex gap-5 p-2">
+              {files.map((file) => {
+                const src =
+                  `data:${file.content_type};base64,${file.content_base64}`;
+                return (
+                  <div
+                    key={file.file_id}
+                    className="bg-white rounded-lg flex-shrink-0 w-40 sm:w-64 h-40 sm:h-64 flex items-center justify-center cursor-pointer"
+                    onClick={() => setSelected(src)}
+                  >
+                    <img
+                      src={src}
+                      alt={file.filename}
+                      className="max-w-full max-h-full object-contain rounded"
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-
           {/* モーダル */}
           {selected && (
             <div
@@ -67,7 +58,6 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
               >
                 ×
               </button>
-
               {/* 写真の周りの黒いボックスを半透明に */}
               <div className="p-4 bg-black bg-opacity-50 rounded-lg">
                 <img
@@ -79,10 +69,8 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
             </div>
           )}
         </>
-      ) : (
-        <p className="text-white my-3">データがありません</p>
-      )}
-
+      )
+      : <p className="text-white my-3">データがありません</p>}
     </div>
   );
 };

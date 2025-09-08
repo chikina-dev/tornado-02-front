@@ -9,6 +9,9 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), VitePWA({
     registerType: "autoUpdate",
     injectRegister: 'auto',
+    devOptions: {
+      enabled: true
+    },
     manifest: {
       name: "Viofolio",
       short_name: "Viofolio",
