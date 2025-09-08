@@ -122,26 +122,30 @@ export default function Home() {
     const yesterdayStr = yesterday.toISOString().split("T")[0];
     localStorage.setItem(LAST_VIEWED_SUMMARY_KEY, yesterdayStr);
 
-    navigate(`/summary?date=${dateStr}`);
+    navigate(`/summary?date=${yesterdayStr}`);
   };
 
   return (
     <div className="min-h-screen bg-custom-purple">
       <Header onUploadSuccess={refreshUploadedFiles} />
       <div>
-        <div className="text-center relative">
+      <div className="text-center">
+        <div className="relative my-20">
           <button
             onClick={handleOpenSummary}
-            className="relative font-[var(--font-shippori)] bg-white inline-block text-custom-purple text-3xl my-20 px-6 py-2 tracking-[0.6em] rounded-lg"
+            className="relative bg-white inline-block text-custom-purple text-2xl sm:text-3xl px-8 sm:px-12 py-2 sm:py-3 tracking-[0.3rem] sm:tracking-[0.6rem] rounded-lg"
           >
-            Summary
+            新着の要約を見る
             {showNew && (
-              <span className="absolute -top-4 -right-6 bg-[#C5B4E3] text-white text-sm px-3 py-1 rounded-full">
+              <span 
+                className="absolute flex items-center justify-center pl-0.5 text-sm sm:text-lg w-10 sm:w-15 h-10 sm:h-15 -top-4 sm:-top-8 -left-4 sm:-left-7 bg-[#C5B4E3] text-white rounded-full font-sans tracking-[0.05em] sm:tracking-[0.1em]"
+              >
                 NEW
-                </span>
-              )}
+              </span>
+            )}
           </button>
         </div>
+      </div>
         <hr className="border-t-2 border-white my-4" />
         <GoogleSearch logs={logs} />
         <hr className="border-t-2 border-white my-4" />

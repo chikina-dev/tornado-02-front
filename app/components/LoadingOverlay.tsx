@@ -18,7 +18,11 @@ export default function LoadingOverlay() {
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-custom-purple bg-opacity-80 z-50">
       <div className="flex flex-col items-center">
         {/* ロゴの円アイコン部分 */}
-        <img src="/tornado-02-front/image/loading.png" alt="モモンガローディング画像" width={150} className="animate-pulse"/>
+        <img 
+          src="/tornado-02-front/image/loading.png" 
+          alt="モモンガローディング画像" 
+          className="w-24 sm:w-36 animate-pulse"
+        />
         {/* テキスト */}
         <p className="text-white text-lg tracking-widest animate-pulse">
           loading{dots}

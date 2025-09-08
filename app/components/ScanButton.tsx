@@ -21,6 +21,8 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const { setLoading } = useLoading();
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   async function uploadFile(file: File) {
     setLoading(true);
     const formData = new FormData();
@@ -31,17 +33,17 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
       console.log("アップロード成功:", result);
       if (onUploadSuccess) onUploadSuccess();
       return result;
-    }catch (error) {
+    } catch (error) {
       console.error("アップロード失敗", error);
       throw error;
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
 
   function handleSelect(action: string) {
     setOpen(false);
-    
+
     switch(action) {
       case "camera":
         cameraInputRef.current?.click();
@@ -53,7 +55,6 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(event);
     const file = event.target.files?.[0];
     if (!file) return;
     uploadFile(file);
@@ -70,20 +71,30 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
     }
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-
   }, []);
 
-	return (
+  function handleButtonClick() {
+    if (isMobile) {
+      setOpen(!open); // スマホならメニューを表示
+    } else {
+      handleSelect("file"); // PCなら直接ファイル選択
+    }
+  }
+
+  return (
     <div className="relative inline-block">
       <button
         ref={buttonRef}
-        onClick={() => setOpen(!open)}
-        className="py-1">
-        <div className="w-13 h-13 rounded-full bg-white flex items-center justify-center shadow-md">
-          <Upload className="w-7 h-7 text-custom-purple" />
+        onClick={handleButtonClick}
+        className="py-1"
+      >
+        <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-white flex items-center justify-center shadow-md">
+          <Upload className="w-6 h-6 sm:w-7 sm:h-7 text-custom-purple" />
         </div>
       </button>
-      {/* メニュー */}
+
+      {/* メニュー (スマホ専用) */}
+      {isMobile && (
         <div
           ref={menuRef}
           className={`absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10
@@ -111,22 +122,23 @@ export const ScanButton: FC<ScanButtonProps> = ({ onUploadSuccess }) => {
             </li>
           </ul>
         </div>
+      )}
 
-        <input
-          type="file"
-          accept="image/*"
-          capture="environment"
-          className="hidden"
-          ref={cameraInputRef}
-          onChange={handleFileChange}
-        />
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-        />
+      <input
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        ref={cameraInputRef}
+        onChange={handleFileChange}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+      />
     </div>
-	);
-}
+  );
+};

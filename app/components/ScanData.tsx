@@ -33,24 +33,25 @@ export const ScanData: FC<ScanDataProps> = ({ files }) => {
               scrollbarWidth: "none",
             }}
           >
-            <div className="flex gap-5">
-              {files.map((file) => {
-                const src = `data:${file.content_type};base64,${file.content_base64}`;
-                return (
-                  <div
-                    key={file.file_id}
-                    className="bg-white rounded-lg flex-shrink-0 w-64 h-64 flex items-center justify-center cursor-pointer"
-                    onClick={() => setSelected(src)}
-                  >
-                    <img
-                      src={src}
-                      alt={file.filename}
-                      className="max-w-full max-h-full object-contain rounded"
-                    />
-                  </div>
-                );
-              })}
-            </div>
+<div className="flex gap-5 p-2">
+  {files.map((file) => {
+    const src = `data:${file.content_type};base64,${file.content_base64}`;
+    return (
+      <div
+        key={file.file_id}
+        className="bg-white rounded-lg flex-shrink-0 w-40 sm:w-64 h-40 sm:h-64 flex items-center justify-center cursor-pointer"
+        onClick={() => setSelected(src)}
+      >
+        <img
+          src={src}
+          alt={file.filename}
+          className="max-w-full max-h-full object-contain rounded"
+        />
+      </div>
+    );
+  })}
+</div>
+
           </div>
 
           {/* モーダル */}
