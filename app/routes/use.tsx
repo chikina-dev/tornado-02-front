@@ -108,7 +108,7 @@ export default function HowToUse() {
 						</h2>
 						<p>
 							拡張機能を使うと、Google Chromeで調べ物をするだけで、そのサイトで学習したことを記録として残すことができます。<br />
-							以下では、導入方法とその設定方法について説明します。
+							以下では、導入方法とその使用方法について説明します。
 						</p>
 						<h3
 							className="text-md mt-4 cursor-pointer flex"
