@@ -42,8 +42,8 @@ const LAST_VIEWED_SUMMARY_KEY = "lastViewedSummaryDate";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Viofolio" },
+    { name: "Viofolio", content: "学習アプリです。" },
   ];
 }
 

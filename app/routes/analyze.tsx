@@ -267,13 +267,12 @@ export default function Analyze(): React.JSX.Element {
     <div className="min-h-screen bg-custom-purple text-white">
       <Header />
 
+        <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">分析結果</h2>
+        <hr className="border-t-2 border-white" />
       <main className="mx-auto max-w-5xl px-4 py-6 md:py-10 space-y-6">
         {/* ... (タイトル部分は変更なし) ... */}
-        <div className="mb-4 md:mb-6 flex flex-col items-center gap-4">
-          <h1 className="font-[var(--font-shippori)] bg-white text-custom-purple text-2xl md:text-3xl px-4 md:px-6 py-2 tracking-[0.4em] md:tracking-[0.6em] rounded-lg">
-            分析結果
-          </h1>
-        </div>
+
+        
 
         {/* 主要指標 */}
         <section

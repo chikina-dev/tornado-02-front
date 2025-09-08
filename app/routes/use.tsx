@@ -147,7 +147,7 @@ export default function HowToUse() {
 								<img src="/tornado-02-front/image/description3.png" alt="" className="mt-4 mb-10"/>
 							</li>
 							<li>
-								⑤ 展開した「dist」フォルダを挿入する。以上で導入が完了しました。
+								⑤ 配布された「dist」フォルダを展開すると、中に「dist」フォルダと「__MACOSX」フォルダが作成されます。「dist」フォルダが実際に使うファイルです。「__MACOSX」フォルダはMacのシステム用の補助ファイルで、導入には必要ありません。導入する際は「dist」フォルダだけを挿入してください。以上で導入が完了しました。
 								<img src="/tornado-02-front/image/description4.png" alt="" className="mt-4 mb-10"/>
 							</li>
 						</ol>

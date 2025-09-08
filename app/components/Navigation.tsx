@@ -46,7 +46,7 @@ export const Navigation: FC<Props> = ({ open, id }) => {
 				open ? "opacity-100" : "opacity-0 pointer-events-none"
 			}`}
 		>
-			<ul className="w-full text-center text-2xl tracking-[0.6em] mt-5">
+			<ul className="w-full text-center text-2xl tracking-[0.6em] mt-5  overflow-y-auto flex-1">
 				<li className="py-7 text-white"><Link to="/">ホーム</Link></li>
 				<li className="py-7 text-white"><Link to="/analyze">分析結果</Link></li>
 				<li className="py-7 text-white"><Link to="/calendar">履歴</Link></li>
