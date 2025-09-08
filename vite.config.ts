@@ -8,6 +8,7 @@ export default defineConfig({
   base: "/tornado-02-front/",
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), VitePWA({
     registerType: "autoUpdate",
+    injectRegister: 'auto',
     manifest: {
       name: "Viofolio",
       short_name: "Viofolio",
