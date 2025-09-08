@@ -36,9 +36,9 @@ export default function AuthForm({ mode, error, onSubmit }: AuthFormProps) {
                 氏名
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="text"
+                name="text"
+                type="text"
                 required
                 className="w-full px-4 py-2 border border-white bg-white text-black focus:outline-none focus:ring-2 focus:ring-white"
               />
