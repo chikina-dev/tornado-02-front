@@ -285,14 +285,13 @@ export default function Summary() {
   }
 
   return (
-    <div className="min-h-screen bg-custom-purple text-white">
+    <div className="min-h-screen bg-custom-purple text-white w-full overflow-x-hidden">
       <Header />
+      <h2 className="text-white text-3xl text-center tracking-[0.4em] p-2">要約</h2>
+      <hr className="border-t-2 border-white" />
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
         {/* タイトルと日付選択 */}
         <div className="mb-6 md:mb-10 flex flex-col items-center gap-4">
-          <h1 className="font-[var(--font-shippori)] bg-white text-custom-purple text-2xl md:text-3xl px-4 md:px-6 py-2 tracking-[0.4em] md:tracking-[0.6em] rounded-lg">
-            要約
-          </h1>
           <input
             type="date"
             value={formatDate(date)}
