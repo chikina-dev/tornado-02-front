@@ -162,7 +162,7 @@ export default function Calendar() {
         </div>
 
         {/* 選択日付のファイル表示 */}
-        {selectedDate && files.length > 0 && (
+        {selectedDate && (files.length > 0 || logs.length > 0) && (
           <>
             <hr className="border-t-2 border-white mt-15" />
             <div className="text-center pb-2">
